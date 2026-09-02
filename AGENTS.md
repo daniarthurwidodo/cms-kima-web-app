@@ -88,4 +88,38 @@ presentation → business → data
 
 Applies with the global constitution (KISS, SoC R21, 3-layer separation, no DB business logic R19k).
 
+# Validation: Zod
+
+**All validation at trust boundaries goes through Zod.** No hand-rolled `typeof`/regex chains, no bespoke `assertX()` helpers when a schema does the same job.
+
+## Where to validate
+
+| Boundary                       | Schema location                                      | Notes                                                        |
+|--------------------------------|------------------------------------------------------|--------------------------------------------------------------|
+| API route handlers (`app/api/**`) | `src/features/<f>/business/schema.ts`             | `schema.safeParse(await req.json())` at the top of the handler. Return 400 with issues on failure. |
+| Server actions                 | Same feature `business/schema.ts`                    | Validate inputs before touching data layer.                  |
+| Client forms                   | `src/features/<f>/presentation/formSchema.ts`        | Use the same base schema when possible; extend with UI-only shape (e.g. `chapter` as string input). |
+| External API responses         | Feature `business/` next to the client that calls them | Validate parsed JSON before it enters business logic.        |
+
+Data layer (`data/`) does **not** validate — it trusts pre-validated inputs. Presentation may re-derive schemas from business schemas but never invents new validation rules that contradict the server.
+
+## Rules
+
+- One schema per shape. Reuse via `.extend()`, `.pick()`, `.omit()` — don't duplicate.
+- Prefer `safeParse` at boundaries, `parse` deep inside where a failure is truly a bug.
+- Infer types with `z.infer<typeof …>` / `z.input<>` / `z.output<>` — never hand-write the type alongside the schema.
+- Coerce user input explicitly (`z.coerce.number()` or `.transform()`) — do not rely on JS implicit conversion. Follow R12b: any string→number conversion must reject `NaN`.
+- Trim + normalize strings in the schema (`.trim().min(1)`) — presentation just wires values.
+- Cross-field rules via `.refine()` / `.superRefine()`, not spread across handlers.
+- On error, expose issues as `{ field: message }` (see `presentation/formSchema.ts::flattenIssues`) — never raw `ZodError` to the mobile client.
+- Server responses to invalid input: `400` + `{ error: string, issues?: Array<{path, message}> }`. Never `500`.
+- Do not use Zod inside hot loops (per-row validation across large query results). Validate at the boundary once.
+
+## Anti-patterns
+
+- Manual `if (!body || typeof body !== "object")` when a schema would say it.
+- Bespoke `assertIsoDate`, `requireString`, custom regex checkers when Zod primitives cover them. Delete on sight.
+- Duplicating the API payload shape across server and client — share via feature `index.ts` re-export.
+- Silent `parse()` inside a `try/catch` that swallows the error. Errors are the whole point.
+
 _(CLAUDE.md imports this file via `@AGENTS.md` — no duplication needed.)_
