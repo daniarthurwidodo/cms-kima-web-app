@@ -5,4 +5,4 @@
 // Example:
 //   export * from "@/src/features/auth/data/schema";
 //   export * from "@/src/features/config-filter/data/schema";
-export {};
+export * from "@/src/features/renungan/data/schema";

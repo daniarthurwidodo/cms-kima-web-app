@@ -1,7 +1,35 @@
 {
   "permissions": {
     "allow": [
-      "Bash(pnpm add *)"
+      "Bash(pnpm add *)",
+      "Bash(pnpm exec *)",
+      "Bash(./node_modules/.bin/tsc --noEmit)",
+      "Bash(claude mcp *)",
+      "mcp__supabase__get_project_url",
+      "mcp__supabase__get_publishable_keys",
+      "mcp__supabase__list_tables",
+      "Bash(git check-ignore *)",
+      "Bash(pnpm db:generate)",
+      "Bash(npx drizzle-kit *)",
+      "Bash(npx tsc *)",
+      "mcp__supabase__apply_migration",
+      "Bash(npx tsx *)",
+      "Bash(npx --yes tsx@latest src/features/renungan/business/__check.ts)",
+      "Bash(curl -s -o /tmp/alk1.txt -w \"STATUS %{http_code} SIZE %{size_download}\\\\n\" \"https://api.alkitab.mobi/\" --max-time 8)",
+      "Read(//tmp/**)",
+      "Bash(curl -s -o /tmp/alk2.txt -w \"STATUS %{http_code}\\\\n\" \"https://api.alkitab.mobi/passage?ref=Yohanes%203:16\" --max-time 8)",
+      "Bash(curl -sI \"https://api.alkitab.mobi\" --max-time 8)",
+      "Bash(dig +short api.alkitab.mobi)",
+      "Bash(curl -s --max-time 6 \"https://api.alkitab.app\")",
+      "Bash(curl -s --max-time 6 \"https://api.alkitab.app/passage?ref=John+3:16\")",
+      "Bash(curl -s --max-time 6 \"https://api.alkitab.app/v1\")",
+      "Bash(curl -sIL --max-time 6 \"https://api.sabda.org\")",
+      "Bash(curl -s --max-time 8 \"https://api.ayt.co/v1/bible.php?book=Yoh&chapter=3&source=kima-cms.local\" -o /tmp/yoh3.json -w \"HTTP %{http_code} size %{size_download}\\\\n\")",
+      "Bash(node -e \"const j=require\\('/tmp/yoh3.json'\\); console.log\\('top:', Object.keys\\(j\\)\\); const k=Object.keys\\(j\\)[0]; console.log\\('info:', j[k].info\\); console.log\\('chapters:', Object.keys\\(j[k].data\\)\\); const c=j[k].data[Object.keys\\(j[k].data\\)[0]]; const verses=Object.values\\(c\\); console.log\\('verse count:', verses.length\\); console.log\\('verse 16:', verses.find\\(v=>v.verse==='16'\\)\\);\")"
     ]
-  }
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "supabase"
+  ]
 }

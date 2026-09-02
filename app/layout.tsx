@@ -20,9 +20,7 @@ export const metadata: Metadata = {
 
 const NAV_ITEMS = [
   { href: "/", label: "Dashboard" },
-  { href: "/users", label: "Users" },
-  { href: "/content", label: "Content" },
-  { href: "/settings", label: "Settings" },
+  { href: "/renungan", label: "Renungan" },
 ];
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
