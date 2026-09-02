@@ -41,7 +41,7 @@ export function CalendarMonth({ month, days, selectedDate, onSelect }: Props) {
               key={day.date}
               type="button"
               onClick={() => onSelect(day)}
-              className={`flex aspect-square flex-col items-center justify-center rounded border p-2 text-sm transition ${
+              className={`relative flex aspect-square items-center justify-center rounded border p-2 text-sm transition ${
                 isSelected
                   ? "border-zinc-900 bg-zinc-100 dark:border-zinc-100 dark:bg-zinc-800"
                   : "border-zinc-200 bg-white hover:bg-zinc-50 dark:border-zinc-800 dark:bg-zinc-900 dark:hover:bg-zinc-800"
@@ -49,9 +49,9 @@ export function CalendarMonth({ month, days, selectedDate, onSelect }: Props) {
               aria-label={`${day.date}${day.hasContent ? " (has renungan)" : ""}`}
             >
               <span>{dayNum}</span>
-              <span
-                className={`mt-1 h-2 w-2 rounded-full ${day.hasContent ? "bg-emerald-500" : "bg-transparent"}`}
-              />
+              {day.hasContent && (
+                <span className="absolute right-1.5 top-1.5 h-2 w-2 rounded-full bg-emerald-500" />
+              )}
             </button>
           );
         })}
