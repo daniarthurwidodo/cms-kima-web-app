@@ -1,8 +1,13 @@
-import { and, eq, gte, isNull, lte } from "drizzle-orm";
+import { and, count, eq, gte, isNull, lte } from "drizzle-orm";
 import { db } from "@/src/db/client";
 import { renunganDaily, type RenunganDailyInsert, type RenunganDailyRow } from "./schema";
 
 const activeOnly = () => isNull(renunganDaily.deletedAt);
+
+export async function countActive(): Promise<number> {
+  const [row] = await db.select({ n: count() }).from(renunganDaily).where(activeOnly());
+  return row?.n ?? 0;
+}
 
 export async function findByDate(dateIso: string): Promise<RenunganDailyRow | null> {
   const rows = await db
