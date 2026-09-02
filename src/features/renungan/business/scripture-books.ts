@@ -75,6 +75,84 @@ const BOOK_MAP: Record<string, string> = {
   wahyu: "Why", why: "Why",
 };
 
+export type BookMeta = { name: string; abbr: string };
+
+// Canonical display order (Perjanjian Lama then Perjanjian Baru).
+// `name` = full Indonesian name used in composed refs like "Yohanes 3:16".
+export const SCRIPTURE_BOOKS: BookMeta[] = [
+  { name: "Kejadian", abbr: "Kej" },
+  { name: "Keluaran", abbr: "Kel" },
+  { name: "Imamat", abbr: "Im" },
+  { name: "Bilangan", abbr: "Bil" },
+  { name: "Ulangan", abbr: "Ul" },
+  { name: "Yosua", abbr: "Yos" },
+  { name: "Hakim-hakim", abbr: "Hak" },
+  { name: "Rut", abbr: "Rut" },
+  { name: "1 Samuel", abbr: "1Sam" },
+  { name: "2 Samuel", abbr: "2Sam" },
+  { name: "1 Raja-raja", abbr: "1Raj" },
+  { name: "2 Raja-raja", abbr: "2Raj" },
+  { name: "1 Tawarikh", abbr: "1Taw" },
+  { name: "2 Tawarikh", abbr: "2Taw" },
+  { name: "Ezra", abbr: "Ezr" },
+  { name: "Nehemia", abbr: "Neh" },
+  { name: "Ester", abbr: "Est" },
+  { name: "Ayub", abbr: "Ayb" },
+  { name: "Mazmur", abbr: "Mzm" },
+  { name: "Amsal", abbr: "Ams" },
+  { name: "Pengkhotbah", abbr: "Pkh" },
+  { name: "Kidung Agung", abbr: "Kid" },
+  { name: "Yesaya", abbr: "Yes" },
+  { name: "Yeremia", abbr: "Yer" },
+  { name: "Ratapan", abbr: "Rat" },
+  { name: "Yehezkiel", abbr: "Yeh" },
+  { name: "Daniel", abbr: "Dan" },
+  { name: "Hosea", abbr: "Hos" },
+  { name: "Yoel", abbr: "Yl" },
+  { name: "Amos", abbr: "Am" },
+  { name: "Obaja", abbr: "Ob" },
+  { name: "Yunus", abbr: "Yun" },
+  { name: "Mikha", abbr: "Mi" },
+  { name: "Nahum", abbr: "Nah" },
+  { name: "Habakuk", abbr: "Hab" },
+  { name: "Zefanya", abbr: "Zef" },
+  { name: "Hagai", abbr: "Hag" },
+  { name: "Zakharia", abbr: "Za" },
+  { name: "Maleakhi", abbr: "Mal" },
+  { name: "Matius", abbr: "Mat" },
+  { name: "Markus", abbr: "Mrk" },
+  { name: "Lukas", abbr: "Luk" },
+  { name: "Yohanes", abbr: "Yoh" },
+  { name: "Kisah Para Rasul", abbr: "Kis" },
+  { name: "Roma", abbr: "Rm" },
+  { name: "1 Korintus", abbr: "1Kor" },
+  { name: "2 Korintus", abbr: "2Kor" },
+  { name: "Galatia", abbr: "Gal" },
+  { name: "Efesus", abbr: "Ef" },
+  { name: "Filipi", abbr: "Flp" },
+  { name: "Kolose", abbr: "Kol" },
+  { name: "1 Tesalonika", abbr: "1Tes" },
+  { name: "2 Tesalonika", abbr: "2Tes" },
+  { name: "1 Timotius", abbr: "1Tim" },
+  { name: "2 Timotius", abbr: "2Tim" },
+  { name: "Titus", abbr: "Tit" },
+  { name: "Filemon", abbr: "Flm" },
+  { name: "Ibrani", abbr: "Ibr" },
+  { name: "Yakobus", abbr: "Yak" },
+  { name: "1 Petrus", abbr: "1Ptr" },
+  { name: "2 Petrus", abbr: "2Ptr" },
+  { name: "1 Yohanes", abbr: "1Yoh" },
+  { name: "2 Yohanes", abbr: "2Yoh" },
+  { name: "3 Yohanes", abbr: "3Yoh" },
+  { name: "Yudas", abbr: "Yud" },
+  { name: "Wahyu", abbr: "Why" },
+];
+
+export function composeScriptureRef(bookName: string, chapter: number, verseStart: number, verseEnd?: number | null): string {
+  const range = verseEnd && verseEnd > verseStart ? `${verseStart}-${verseEnd}` : `${verseStart}`;
+  return `${bookName} ${chapter}:${range}`;
+}
+
 function normalizeBookKey(raw: string): string {
   return raw.trim().toLowerCase().replace(/\s+/g, " ");
 }

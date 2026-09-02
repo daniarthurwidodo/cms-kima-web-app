@@ -19,8 +19,3 @@ export type RenunganMonthResponse = {
   days: RenunganDayEntry[];
 };
 
-export type RenunganFormState = {
-  title: string;
-  content: string;
-  scriptureRef: string;
-};
