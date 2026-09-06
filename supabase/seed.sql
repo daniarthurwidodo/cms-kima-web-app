@@ -1,0 +1,2 @@
+-- Local-only seed data. Applied by `pnpm dev:reset` after migrations.
+-- Keep this idempotent; it runs on every reset.
