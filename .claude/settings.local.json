@@ -28,7 +28,20 @@
       "Bash(node -e \"const j=require\\('/tmp/yoh3.json'\\); console.log\\('top:', Object.keys\\(j\\)\\); const k=Object.keys\\(j\\)[0]; console.log\\('info:', j[k].info\\); console.log\\('chapters:', Object.keys\\(j[k].data\\)\\); const c=j[k].data[Object.keys\\(j[k].data\\)[0]]; const verses=Object.values\\(c\\); console.log\\('verse count:', verses.length\\); console.log\\('verse 16:', verses.find\\(v=>v.verse==='16'\\)\\);\")",
       "Bash(pnpm run *)",
       "mcp__stitch__list_projects",
-      "mcp__stitch__list_screens"
+      "mcp__stitch__list_screens",
+      "mcp__stitch__get_screen",
+      "Bash(curl -sL \"https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ8Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpbCiVodG1sXzAwMDY1YWRlMWM5OTU1ZmUwMWI0ZTU3M2VlMGFhZmQyEgsSBxDOybeL1B4YAZIBJAoKcHJvamVjdF9pZBIWQhQxMjQ5NDg1MjYwNTg4OTE2MzY1NQ&filename=&opi=89354086\")",
+      "Bash(curl -sL \"https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ8Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpbCiVodG1sXzAwMDY1YWRlMWM5OTU1ZmUwMWI0ZTU3M2VlMGFhZmQyEgsSBxDOybeL1B4YAZIBJAoKcHJvamVjdF9pZBIWQhQxMjQ5NDg1MjYwNTg4OTE2MzZMNQ&filename=&opi=89354086\")",
+      "Bash(curl -sL \"https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ8Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpbCiVodG1sXzAwMDY1YWRlMWM5OTU1ZmUwMWI0ZTU3M2VlMGFhZmQyEgsSBxDOybeL1B4YAZIBJAoKcHJvamVjdF9pZBIWQhQxMjQ5NDg1MjYwNTg4OTE2MzY1NQ&filename=&opi=89354086\" -o /tmp/reg.html)",
+      "Bash(grep -oiE '\\(Nama|Tanggal|Jenis|Alamat|Kota|Nomor|Email|Status|Baptis|Pernikahan|Komsel|Gereja|Rohani|Pekerjaan\\)[^<]{0,60}' /tmp/reg.html)",
+      "Bash(curl -sL \"https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ8Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpbCiVodG1sXzAwMDY1YWRlMWNiNDI3ZjUwNTNiNzMzMDJiMjY3ZjlmEgsSBxDOybeL1B4YAZIBJAoKcHJvamVjdF9pZBIWQhQxMjQ5NDg1MjYwNTg4OTE2MzY1NQ&filename=&opi=89354086\" -o /tmp/home.html)",
+      "Bash(grep -oiE '<h[1-6][^>]*>[^<]+|<!--[^>]{5,80}-->' /tmp/home.html)",
+      "Bash(curl -sL \"https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ8Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpbCiVodG1sXzAwMDY1YWRlMjE0OTZjYWMwMmE5YWRlYjY3MjlkNDNlEgsSBxDOybeL1B4YAZIBJAoKcHJvamVjdF9pZBIWQhQxMjQ5NDg1MjYwNTg4OTE2MzY1NQ&filename=&opi=89354086\" -o /tmp/home2.html)",
+      "Bash(grep -oiE '<h[1-6][^>]*>[^<]+|<!--[^>]{5,80}-->' /tmp/home2.html)",
+      "Bash(curl -sL \"https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ8Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpbCiVodG1sXzAwMDY1YWRlMWM4YmViOTcwOTM0Zjc3NzcwM2M4NDBkEgsSBxDOybeL1B4YAZIBJAoKcHJvamVjdF9pZBIWQhQxMjQ5NDg1MjYwNTg4OTE2MzY1NQ&filename=&opi=89354086\" -o /tmp/komsel.html)",
+      "Bash(grep -oiE '<h[1-6][^>]*>[^<]+|<!--[^>]{5,80}-->' /tmp/komsel.html)",
+      "Bash(curl -sL \"https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ8Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpbCiVodG1sXzAwMDY1YWRlMWM3ZTQyOTQwMDMwMTE1NDBjMWEwZDFmEgsSBxDOybeL1B4YAZIBJAoKcHJvamVjdF9pZBIWQhQxMjQ5NDg1MjYwNTg4OTE2MzY1NQ&filename=&opi=89354086\" -o /tmp/giving.html)",
+      "Bash(grep -oiE '<h[1-6][^>]*>[^<]+|<!--[^>]{5,80}-->|Bank|BCA|BNI|Mandiri|Rekening|Persembahan|Perpuluhan|Bangunan|Misi' /tmp/giving.html)"
     ]
   },
   "enableAllProjectMcpServers": true,
