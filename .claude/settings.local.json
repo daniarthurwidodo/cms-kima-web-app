@@ -26,7 +26,9 @@
       "Bash(curl -sIL --max-time 6 \"https://api.sabda.org\")",
       "Bash(curl -s --max-time 8 \"https://api.ayt.co/v1/bible.php?book=Yoh&chapter=3&source=kima-cms.local\" -o /tmp/yoh3.json -w \"HTTP %{http_code} size %{size_download}\\\\n\")",
       "Bash(node -e \"const j=require\\('/tmp/yoh3.json'\\); console.log\\('top:', Object.keys\\(j\\)\\); const k=Object.keys\\(j\\)[0]; console.log\\('info:', j[k].info\\); console.log\\('chapters:', Object.keys\\(j[k].data\\)\\); const c=j[k].data[Object.keys\\(j[k].data\\)[0]]; const verses=Object.values\\(c\\); console.log\\('verse count:', verses.length\\); console.log\\('verse 16:', verses.find\\(v=>v.verse==='16'\\)\\);\")",
-      "Bash(pnpm run *)"
+      "Bash(pnpm run *)",
+      "mcp__stitch__list_projects",
+      "mcp__stitch__list_screens"
     ]
   },
   "enableAllProjectMcpServers": true,
