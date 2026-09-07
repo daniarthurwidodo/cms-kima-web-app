@@ -16,6 +16,14 @@ function leadingBlankCount(firstDateIso: string): number {
   return new Date(Date.UTC(y, m - 1, d)).getUTCDay();
 }
 
+function todayIso(): string {
+  const now = new Date();
+  const y = now.getUTCFullYear();
+  const m = String(now.getUTCMonth() + 1).padStart(2, "0");
+  const d = String(now.getUTCDate()).padStart(2, "0");
+  return `${y}-${m}-${d}`;
+}
+
 export function CalendarMonth({ month, days, selectedDate, onSelect }: Props) {
   if (days.length === 0) return null;
   const blanks = leadingBlankCount(days[0].date);
@@ -23,6 +31,7 @@ export function CalendarMonth({ month, days, selectedDate, onSelect }: Props) {
     ...Array.from({ length: blanks }, () => null),
     ...days,
   ];
+  const today = todayIso();
 
   return (
     <div>
@@ -36,17 +45,19 @@ export function CalendarMonth({ month, days, selectedDate, onSelect }: Props) {
           if (!day) return <div key={`blank-${idx}`} />;
           const dayNum = Number(day.date.slice(-2));
           const isSelected = day.date === selectedDate;
+          const isToday = day.date === today;
+          const stateClass = isSelected
+            ? "border-zinc-900 bg-zinc-100 dark:border-zinc-100 dark:bg-zinc-800"
+            : isToday
+              ? "border-2 border-emerald-700 bg-white dark:bg-zinc-900"
+              : "border-zinc-200 bg-white hover:bg-zinc-50 dark:border-zinc-800 dark:bg-zinc-900 dark:hover:bg-zinc-800";
           return (
             <button
               key={day.date}
               type="button"
               onClick={() => onSelect(day)}
-              className={`relative flex aspect-square items-center justify-center rounded border p-2 text-sm transition ${
-                isSelected
-                  ? "border-zinc-900 bg-zinc-100 dark:border-zinc-100 dark:bg-zinc-800"
-                  : "border-zinc-200 bg-white hover:bg-zinc-50 dark:border-zinc-800 dark:bg-zinc-900 dark:hover:bg-zinc-800"
-              }`}
-              aria-label={`${day.date}${day.hasContent ? " (has renungan)" : ""}`}
+              className={`relative flex aspect-square items-center justify-center rounded border p-2 text-sm transition ${stateClass}`}
+              aria-label={`${day.date}${isToday ? " (today)" : ""}${day.hasContent ? " (has renungan)" : ""}`}
             >
               <span>{dayNum}</span>
               {day.hasContent && (

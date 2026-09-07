@@ -122,4 +122,43 @@ Data layer (`data/`) does **not** validate — it trusts pre-validated inputs. P
 - Duplicating the API payload shape across server and client — share via feature `index.ts` re-export.
 - Silent `parse()` inside a `try/catch` that swallows the error. Errors are the whole point.
 
+# Database: Dumb Store, No Cascade
+
+**DB is a dumb store. Referential integrity, cascades, and business rules live in the application layer only.** Reinforces global R19d / R19k for this project.
+
+## Rules
+
+- No `FOREIGN KEY` constraints in Drizzle schema (`data/`) — do not use `.references(...)` with `onDelete`/`onUpdate`, and do not declare `foreignKey(...)` on tables.
+- No `ON DELETE CASCADE` / `ON UPDATE CASCADE` — cascades are invisible side effects. Do the delete/update in the service layer explicitly.
+- No `CHECK` constraints for business rules — validate in Zod schema (`business/schema.ts`).
+- No business-rule `UNIQUE` constraints — enforce in service layer via read-then-write inside a transaction, or via an idempotency/dedup key that is technical, not semantic. DB `UNIQUE` OK only on surrogate PK or purely technical dedup columns.
+- No triggers, stored procedures, DB events, or views with baked-in logic.
+- No `ENUM` types — use a lookup/reference table so values change without `ALTER TABLE`.
+- DO index every logical-FK column (`.index()` on the column) — performance, not integrity.
+- DO document logical relationships in a comment next to the column: `// logical FK: renungans.user_id → users.id (enforced in service layer)`.
+
+## Cascade replacements (service layer)
+
+When you would have written `ON DELETE CASCADE`, write the cascade in the service:
+
+```ts
+// business/renungan.service.ts
+export async function deleteRenungan(id: string) {
+  return db.transaction(async (tx) => {
+    await renunganScriptureRepo.deleteByRenunganId(tx, id);
+    await renunganRepo.deleteById(tx, id);
+  });
+}
+```
+
+Same for soft-delete propagation: set `deleted_at` on children in the same transaction.
+
+## Anti-patterns (delete on sight)
+
+- `.references(() => users.id, { onDelete: "cascade" })` in Drizzle schema.
+- `pgTable(..., (t) => ({ chk: check("...", sql`...`) }))` for business rules.
+- `unique("uq_renungans_slug").on(t.slug)` where slug is a business-visible value — enforce in service.
+- Any `.sql` migration file containing `CREATE TRIGGER`, `CREATE FUNCTION` for business logic, or `ALTER TABLE ... ADD CONSTRAINT ... CHECK`.
+- Drizzle `pgEnum(...)` for values that could change (statuses, categories, roles) — lookup table instead.
+
 _(CLAUDE.md imports this file via `@AGENTS.md` — no duplication needed.)_
